@@ -1,0 +1,107 @@
+:root {
+    --bg-color: #0a0a0a;
+    --text-color: #E0E0E0;
+    --text-dim: #555;
+    --accent: #4af626; /* Green for [ OK ] */
+    --alert: #ff3333;
+    --warn: #f1fa8c;
+    --info: #8be9fd;
+    --font-stack: 'Courier New', Courier, monospace;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-stack);
+    font-size: 14px;
+    overflow: hidden;
+    height: 100%;
+}
+
+#screen {
+    padding: 20px;
+    height: calc(100vh - 40px); /* vh for full viewport height */
+    overflow-y: auto;
+    position: relative;
+    z-index: 2;
+    box-sizing: border-box; /* Include padding in height calculation */
+}
+
+/* CRT Effects */
+.scanlines {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 10;
+}
+.glow {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.7);
+    pointer-events: none;
+    z-index: 11;
+}
+
+/* Typography */
+.line { 
+    margin-bottom: 2px; 
+    line-height: 1.4; 
+    word-break: break-all; /* Prevents long lines from overflowing */
+}
+.dim { color: var(--text-dim); }
+.ok { color: var(--accent); font-weight: bold; }
+.warn { color: var(--warn); }
+.err { color: var(--alert); }
+.info { color: var(--info); }
+
+.timestamp { color: var(--text-dim); margin-right: 10px; }
+.service-status { margin-right: 10px; }
+
+.input-line { 
+    display: flex; 
+    align-items: center; 
+    display: none; /* Hidden initially */
+}
+.prompt { 
+    color: var(--text-color); 
+    margin-right: 8px; 
+    white-space: nowrap; /* Keep prompt on one line */
+}
+#cmd-input {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-family: var(--font-stack);
+    font-size: 14px;
+    outline: none;
+    flex-grow: 1;
+    caret-color: var(--text-color);
+    text-transform: lowercase;
+    width: 100%; /* Ensure it takes up space */
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-color); }
+::-webkit-scrollbar-thumb { background: var(--text-dim); border: 1px solid var(--bg-color); }
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    body {
+        font-size: 12px;
+    }
+    #screen {
+        padding: 10px;
+        height: calc(100vh - 20px);
+    }
+    #cmd-input {
+        font-size: 12px;
+    }
+    .line {
+        line-height: 1.3;
+    }
+}
