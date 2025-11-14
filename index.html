@@ -2,19 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paras Sharma | RMNB-1002</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Paras Sharma | Kernel v2.0</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="scanlines"></div>
-    <div class="glow"></div>
     <div id="screen">
-        <div id="output"></div>
+        <div id="terminal-output"></div>
         <div class="input-line" id="input-line">
-            <span class="prompt">guest@RMNB-1002:~$</span>
-            <input type="text" id="cmd-input" autocomplete="off" spellcheck="false" autofocus>
+            <div class="prompt">
+                <span class="p-user">guest</span><span class="p-sep">@</span><span class="p-host">parassharma.com</span>:<span class="p-path">~</span>$
+            </div>
+            <div class="cmd-container">
+                <input type="text" id="cmd-input" autocomplete="off" spellcheck="false" autofocus>
+            </div>
+        </div>
+    </div>
+    <div id="editor-overlay" class="hidden">
+        <div class="editor-header">
+            <span class="editor-title">GNU nano 6.0</span>
+            <span class="editor-file" id="editor-filename">[New Buffer]</span>
+        </div>
+        <textarea id="editor-area" spellcheck="false"></textarea>
+        <div class="editor-footer">
+            <span>^S Save</span>
+            <span>^X Exit</span>
         </div>
     </div>
 </body>
