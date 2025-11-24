@@ -4,11 +4,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const yearSpan = document.getElementById('year');
     if(yearSpan) yearSpan.textContent = new Date().getFullYear();
 
-    // 2. Smooth Scroll (Lenis)
+    // 2. Smooth Scroll (Lenis) - Check for touch to optimize
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     const lenis = new Lenis({
         duration: 1.2,
         smooth: true,
-        smoothTouch: false
+        smoothTouch: false // Disable lenis on touch devices for native feel
     });
     function raf(time) {
         lenis.raf(time);
@@ -44,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener('scroll', () => {
         let current = '';
         document.querySelectorAll('section').forEach(section => {
-            // Offset ensures the link highlights slightly before the section hits the top
             if (window.scrollY >= (section.offsetTop - 300)) {
                 current = section.getAttribute('id');
             }
@@ -64,15 +64,22 @@ document.addEventListener("DOMContentLoaded", () => {
     if(menuBtn) {
         menuBtn.addEventListener('click', () => {
             navContainer.classList.toggle('open');
-            // Optional: Toggle a class on the button for animation if you add CSS for it later
-            menuBtn.classList.toggle('active'); 
+            menuBtn.classList.toggle('active'); // Animates the hamburger
+            
+            // Prevent body scroll when menu is open
+            if(navContainer.classList.contains('open')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
         });
         
-        // Close menu when a link is clicked (Mobile UX best practice)
-        document.querySelectorAll('.nav-link').forEach(link => {
+        // Close menu when a link is clicked
+        document.querySelectorAll('.nav-link, .cta-button').forEach(link => {
             link.addEventListener('click', () => {
                 navContainer.classList.remove('open');
                 menuBtn.classList.remove('active');
+                document.body.style.overflow = '';
             });
         });
     }
